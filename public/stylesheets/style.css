@@ -6,6 +6,20 @@ a {
   color: #00B7FF;
 }
 .thumbnail img{
-    margin: 0 auto;
+    max-height: 150px;
+    max-width: 150px;
+}
 
+.thumbnail .description{
+    color: black;
+}
+
+.thumbnails {
+    text-align:center;
+}
+
+.thumbnails > li {
+    display: inline-block;
+    *display:inline; /* ie7 fix */
+    float: none; /* this is the part that makes it work */
 }

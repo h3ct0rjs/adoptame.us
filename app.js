@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expresshbs = require('express-handlebars');
+var mongoose = require('mongoose');
 
 //Registered apps 
 var admin = require('./routes/admin');
@@ -20,6 +21,10 @@ var about = require('./routes/about');
 
 //initilize your app.
 var app = express();
+
+//connect with the nosql database, by default mongod is running in 27017
+mongoose.connect('localhost:27017/adoptadb');
+
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs',expresshbs({defaultLayout:'layout',extname:'.hbs'}));
@@ -44,7 +49,6 @@ app.use('/donaciones', payment);
 app.use('/denuncia', complaint);
 app.use('/contacto', contact);
 app.use('/acerca', about);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

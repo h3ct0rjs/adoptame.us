@@ -5,21 +5,26 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expresshbs = require('express-handlebars');
 
 //Registered apps 
-var index = require('./routes/index');
+var admin = require('./routes/admin');
 var users = require('./routes/users');
-var about = require('./routes/about');
+var index = require('./routes/index');
+var se    = require('./routes/eventos');
+var explora = require('./routes/shop');
 var payment = require('./routes/payments');
-var socialevents = require('./routes/events');
 var complaint = require('./routes/complaint');
+var contact = require('./routes/contact');
+var about = require('./routes/about');
 
 //initilize your app.
 var app = express();
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+//app.set('views', path.join(__dirname, 'views'));
+app.engine('.hbs',expresshbs({defaultLayout:'layout',extname:'.hbs'}));
+//refers to the previous engin
+app.set('view engine', '.hbs');     
 
 //Favicon definition and cookie manager.
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -30,12 +35,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Urls to resolve along with renders
-app.use('/', index);
+app.use('/admin', admin);
 app.use('/users', users);
-app.use('/about', about);
-app.use('/events', socialevents);
-app.use('/payments', payment);
-app.use('/complaints', complaint);
+app.use('/', index);
+app.use('/eventos', se);
+app.use('/explorar', explora);
+app.use('/donaciones', payment);
+app.use('/denuncia', complaint);
+app.use('/contacto', contact);
+app.use('/acerca', about);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,5 +63,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

@@ -1,25 +1,19 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-a {
-  color: #00B7FF;
+@import url('https://fonts.googleapis.com/css?family=Lobster|Orbitron');
+
+.texto-hector{
+    font-family: Lobster, Monospace;
+    font-size: 23px;
 }
 .thumbnail img{
-    max-height: 150px;
-    max-width: 150px;
+    max-height: 200px;
 }
 
-.thumbnail .description{
-    color: black;
+.thumbnail description{
+    color: #7f7f7f;
 }
 
-.thumbnails {
-    text-align:center;
-}
+.price {
+    font-weight: bold;
+    font-size: 16px;
 
-.thumbnails > li {
-    display: inline-block;
-    *display:inline; /* ie7 fix */
-    float: none; /* this is the part that makes it work */
 }

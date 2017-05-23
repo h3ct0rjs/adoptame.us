@@ -1,4 +1,3 @@
-//require libraries
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,64 +6,58 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expresshbs = require('express-handlebars');
 var mongoose = require('mongoose');
-
-//Registered apps 
-var admin = require('./routes/admin');
-var users = require('./routes/users');
 var index = require('./routes/index');
-var se    = require('./routes/eventos');
-var explora = require('./routes/shop');
-var payment = require('./routes/payments');
-var complaint = require('./routes/complaint');
-var contact = require('./routes/contact');
-var about = require('./routes/about');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+//connect with the database and create the database adoptame.co
+mongoose.connect('localhost:27017/adoptameco');
 
-//initilize your app.
 var app = express();
 
-//connect with the nosql database, by default mongod is running in 27017
-mongoose.connect('localhost:27017/adoptadb');
-
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs',expresshbs({defaultLayout:'layout',extname:'.hbs'}));
-//refers to the previous engin
-app.set('view engine', '.hbs');     
-
-//Favicon definition and cookie manager.
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.set('views', path.join(__dirname, 'views'));
+app.engine('.hbs', expresshbs({
+    defaultLayout: 'layout',
+    extname: '.hbs'
+}));
+app.set('view engine', 'hbs');
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
+app.use(session({
+    secret: 'MySuperSecretTest',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());   
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Urls to resolve along with renders
-app.use('/admin', admin);
-app.use('/users', users);
 app.use('/', index);
-app.use('/eventos', se);
-app.use('/explorar', explora);
-app.use('/donaciones', payment);
-app.use('/denuncia', complaint);
-app.use('/contacto', contact);
-app.use('/acerca', about);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
+
 module.exports = app;

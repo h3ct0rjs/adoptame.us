@@ -17,3 +17,22 @@
     font-size: 16px;
 
 }
+.clogin {
+    margin-top:30px;
+}
+
+.cloginfrase {
+    float:right; 
+    font-size: 80%;
+    position: relative;
+    top:-10px;
+}
+
+.g{
+    margin-bottom: 12px;
+}
+
+.lineahr{
+    margin-top:10px;
+    margin-bottom:10px;
+}

@@ -1,0 +1,78 @@
+<!--<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Login</h1>
+        {{#if hasErrors}}
+        <div class="aler alert-danger">
+            {{# each messages}}
+                <p autofocus> {{this}}</p>
+            {{/each}}
+        </div>
+        {{/if}}
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="email">Correo:</label>
+            <input type="email" name="email" id="email" class="form-control" required placeholder="*correo@sitio.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <input type="hidden" name="_csrf" value="{{ csrfToken }}" oninvalid="this.setCustomValidity('Debe Aceptar Nuestros Terminos de Referencia')">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>-->
+<div class="container clogin">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+    <div class="panel-heading"><h1 class="panel-title"><strong>Login</strong></h1>
+    {{#if hasErrors}}
+        <div class="aler alert-danger">
+            {{# each messages}}
+                <p autofocus> {{this}}</p>
+            {{/each}}
+        </div>
+        {{/if}}
+    <div class="cloginfrase"><a href="#">Olvidaste tu password?</a></div>
+    </div>
+    <div class="panel-body">
+      <form role="form" action="" method="post">
+        
+        <div class="g input-group ">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="email" name="email" id="email" class="form-control" required placeholder="*correo@sitio.com">
+        </div>
+                                    
+        <div class="input-group g">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+          <input id="password" type="password" class="form-control" name="password" placeholder="password">
+        </div>
+
+        <div class="input-group">
+          <div class="checkbox" style="margin-top: 0px;">
+              <label>
+                 <input id="login-remember" type="checkbox" name="remember" value="1"> Recordarme
+              </label>
+          </div>
+        </div>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}" oninvalid="this.setCustomValidity('Debe Aceptar Nuestros Terminos de Referencia')">
+        <button type="submit" class="btn btn-primary center-block">Iniciar Sesión</button>
+        <hr class="lineahr" >
+        <div class="form-group">
+            <div style="font-size:85%">
+              Sin cuenta aún, que esperas! 
+              <a href="/usuario/registro">registrate aquí</a>
+            </div>
+        </div> 
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<br/>

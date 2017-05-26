@@ -1,26 +1,23 @@
-var mongo = require('mongoose');
+var mongoose = require('mongoose');
+//Want to validate the correctness of the email address
 require('mongoose-type-email');
+var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt-nodejs');
 
-var Schema = mongo.Schema;
+
 var userSchema = new Schema({
     username: {
         type: String,
         required: true,
         unique: true,
         minlength: 5,
-        maxlength: 50,
+        maxlength: 50
     },
     email: {
-        work: {
-            type: mongoose.SchemaTypes.Email,
-            allowBlank: true,
-            required: true,
-            unique: true
-        },
-        home: mongoose.SchemaTypes.Email,
+        type: String,
         required: true,
         unique: true
-    }
+    },
     fname: {
         type: String,
         required: true
@@ -34,16 +31,25 @@ var userSchema = new Schema({
         default: Date.now
     },
     tel: {
-        type: String,
+        type: String
     },
     homeaddress: {
-        type: String
-    }
-    password:{
-        type:String, 
-        required: true,
-        minlength:[8,"Contraseña menor de 8 caracteres"]
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        minlength: 8,
     }
 });
 
-module.exports = mongo.model('User', userSchema);
+//Encrypt and salt the password to get hash using 6 rounds
+userSchema.methods.encryptPassword = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(6), null);
+};
+//validation of the password
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
